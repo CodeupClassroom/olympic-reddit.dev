@@ -1,14 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>My First View</title>
-    <style type="text/css">
-    	body {
-    		background-color: blue;
-    	}
-    </style>
-</head>
-<body>
-    <h1>Hello, <?= $name ?>!</h1>
-</body>
-</html>
+@extends('layouts.another')
+
+@section('footer')
+    <p>Copyright 2017</p>
+@stop
+
+@section('content')
+
+    @if ($name !== 'World')
+        <h1>Hello, {{ $name }}!</h1>
+    @else
+        <p>You must have a name, right?</p>
+    @endif
+
+    <p>More content here!!</p>
+@stop
