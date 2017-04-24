@@ -25,11 +25,7 @@
         break;
 }*/
 
-Route::get('/from/{start}/to/{end}', function ($start, $end) {
-    $data = ['start' => $start, 'end' => $end];
-
-    return view('foreach', $data);
-});
+Route::get('/from/{start}/to/{end}', 'HomeController@showNumbers');
 
 Route::get('/uppercase/{word}' /* this i the path */, /* controller function*/ function ($word) {
     $data = [
@@ -39,9 +35,7 @@ Route::get('/uppercase/{word}' /* this i the path */, /* controller function*/ f
     return view('uppercase', $data);
 });
 
-Route::get('/', function () {
-    return  view('welcome');
-});
+Route::get('/', 'HomeController@showWelcomePage');
 
 Route::get('/rolldice/{guess}', function($guess) {
     $random = mt_rand(1, 6);
@@ -71,24 +65,18 @@ Route::get('/rolldice/{guess}', function($guess) {
 
 });
 
-Route::get('/sayhello/{name?}', function($name = "World") {
-    
-    if($name == "Ryan") {
-        return Redirect::to("/");
-    }
-
-    $data = ['name' => $name];
-
-    return view('my-first-view', $data);
-});
+Route::get('/sayhello/{name?}', 'HomeController@sayHello');
 
 
 Route::get('/increment/{number?}', function($number = 0) {
+    $data = [];
     if(is_numeric($number)) {
-        return $number + 1;
+        $data['number'] = $number + 1;
     } else {
-        return $number . " is not a number and cannot be incremented.";
+        $data['number'] = $number . " is not a number and cannot be incremented.";
     }
+
+    return view('increment', $data);
 });
 
 Route::get('/add/{num1}/{num2}', function($num1, $num2) {

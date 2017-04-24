@@ -10,6 +10,18 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
 <body>
+    <nav>
+        <ul>
+            <li>
+                <a href="{{ action('HomeController@showNumbers', [10, 20]) }}">
+                    Count from 10 to 20
+                </a>
+            </li>
+            <li>
+                <a href="{{ action('HomeController@showWelcomePage') }}">Welcome</a>
+            </li>
+        </ul>
+    </nav>
     <main class="container">
         @yield('content')
     </main>
