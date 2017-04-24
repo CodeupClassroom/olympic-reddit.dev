@@ -12,11 +12,45 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return  view('welcome');
+});
+
+Route::get('/rolldice/{guess}', function($guess) {
+	$random = mt_rand(1, 6);
+
+	if(!is_numeric($guess) || ($guess > 6 || $guess < 1)) {
+		$message = "Your guess must be a number between 1 and 6";
+	}
+
+	if($guess == $random) {
+		$message = "You guessed it!";
+	} else if($guess > $random) {
+		$message = "You guessed too high!";
+	} else {
+		$message = "You guessed too low, yo!";
+	}
+
+	$data = [
+		'guess' => $guess,
+		'random' => $random,
+		'message' => $message
+	];
+
+
+	return view('roll-dice', $data);
+
+
 });
 
 Route::get('/sayhello/{name?}', function($name = "World") {
-    return "Hello, $name!";
+	
+	if($name == "Ryan") {
+		return Redirect::to("/");
+	}
+
+	$data = ['name' => $name];
+
+    return view('my-first-view', $data);
 });
 
 Route::get('/uppercase/{word}', function($word) {
@@ -38,3 +72,4 @@ Route::get('/add/{num1}/{num2}', function($num1, $num2) {
 		return "Both parameters must be numeric.";
 	}
 });
+
