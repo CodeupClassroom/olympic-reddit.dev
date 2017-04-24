@@ -31,6 +31,13 @@ Route::get('/from/{start}/to/{end}', function ($start, $end) {
     return view('foreach', $data);
 });
 
+Route::get('/uppercase/{word}' /* this i the path */, /* controller function*/ function ($word) {
+    $data = [
+        'word' => $word,
+        'uppercased' => strtoupper($word),
+    ];
+    return view('uppercase', $data);
+});
 
 Route::get('/', function () {
     return  view('welcome');
@@ -75,9 +82,6 @@ Route::get('/sayhello/{name?}', function($name = "World") {
     return view('my-first-view', $data);
 });
 
-Route::get('/uppercase/{word}', function($word) {
-    return strtoupper($word);
-});
 
 Route::get('/increment/{number?}', function($number = 0) {
     if(is_numeric($number)) {
