@@ -11,6 +11,27 @@
 |
 */
 
+
+// PageController
+// Router
+/*switch ($path) {
+    case '/': // in Laravel it looks like Route::get('/', function () {
+        // our controller logic
+        return  view('welcome');
+        break;
+    case '/ads/new': // Route::get('/ads/new', function () {
+        break;
+    case '/ads/edit': // Route::get('/ads/edit', function () {
+        break;
+}*/
+
+Route::get('/from/{start}/to/{end}', function ($start, $end) {
+    $data = ['start' => $start, 'end' => $end];
+
+    return view('foreach', $data);
+});
+
+
 Route::get('/', function () {
     return  view('welcome');
 });
