@@ -44,4 +44,4 @@ Route::put('/posts/{posts}', 'PostsController@update'); // update the post in th
 Route::delete('/posts/{posts}', 'PostsController@destroy'); // delete a post*/
 
 
-Route::resource('posts', 'PostsController');  // A resource controller
+Route::resource('/posts', 'PostsController');  // A resource controller!
