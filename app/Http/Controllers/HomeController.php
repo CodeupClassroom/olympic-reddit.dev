@@ -14,7 +14,8 @@ class HomeController extends Controller
     {
         /*header('location: /sayhello/Olympic');
         die;*/
-        return redirect()->action('HomeController@sayHello', ['Olympic']);
+        //return redirect()->action('HomeController@sayHello', ['Olympic']);
+        return view('welcome');
     }
 
     public function showNumbers($start, $end) {
