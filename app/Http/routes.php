@@ -26,64 +26,22 @@
 }*/
 
 Route::get('/from/{start}/to/{end}', 'HomeController@showNumbers');
-
-Route::get('/uppercase/{word}' /* this i the path */, /* controller function*/ function ($word) {
-    $data = [
-        'word' => $word,
-        'uppercased' => strtoupper($word),
-    ];
-    return view('uppercase', $data);
-});
-
 Route::get('/', 'HomeController@showWelcomePage');
-
-Route::get('/rolldice/{guess}', function($guess) {
-    $random = mt_rand(1, 6);
-
-    if($guess == $random) {
-        $message = "You guessed it!";
-    } else if($guess > $random) {
-        $message = "You guessed too high!";
-    } else {
-        $message = "You guessed too low, yo!";
-    }
-
-    if(!is_numeric($guess) || ($guess > 6 || $guess < 1)) {
-        $message = "Your guess must be a number between 1 and 6";
-    }
-
-    
-    $data = [
-        'guess' => $guess,
-        'random' => $random,
-        'message' => $message
-    ];
-
-
-    return view('roll-dice', $data);
-
-
-});
-
 Route::get('/sayhello/{name?}', 'HomeController@sayHello');
 
+Route::get('/uppercase/{word}' /* path */, /* controller@method */'ExampleController@uppercased');
+Route::get('/rolldice/{guess}', 'ExampleController@rollDice');
+Route::get('/increment/{number?}', 'ExampleController@increment');
+Route::get('/add/{num1}/{num2}', 'ExampleController@addition');
 
-Route::get('/increment/{number?}', function($number = 0) {
-    $data = [];
-    if(is_numeric($number)) {
-        $data['number'] = $number + 1;
-    } else {
-        $data['number'] = $number . " is not a number and cannot be incremented.";
-    }
+/*// CRUD operations for posts
+Route::get('/posts', 'PostsController@index'); // show all the posts
+Route::get('/posts/create', 'PostsController@create'); // show the form to create a post
+Route::post('/posts', 'PostsController@store'); // save the new post
+Route::get('/posts/{posts}', 'PostsController@show'); // show a specific post (by id)
+Route::get('/posts/{posts}/edit', 'PostsController@edit'); // show the form to edit a post
+Route::put('/posts/{posts}', 'PostsController@update'); // update the post in the database
+Route::delete('/posts/{posts}', 'PostsController@destroy'); // delete a post*/
 
-    return view('increment', $data);
-});
 
-Route::get('/add/{num1}/{num2}', function($num1, $num2) {
-    if(is_numeric($num1) && is_numeric($num2)) {
-        return $num1 + $num2;
-    } else {
-        return "Both parameters must be numeric.";
-    }
-});
-
+Route::resource('posts', 'PostsController');  // A resource controller
