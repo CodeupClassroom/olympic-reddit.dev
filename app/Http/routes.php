@@ -44,4 +44,29 @@ Route::put('/posts/{posts}', 'PostsController@update'); // update the post in th
 Route::delete('/posts/{posts}', 'PostsController@destroy'); // delete a post*/
 
 
-Route::resource('/posts', 'PostsController');  // A resource controller!
+Route::resource('posts', 'PostsController');  // A resource controller
+Route::resource('students', 'StudentsController');  // A resource controller
+
+
+Route::get('orm-test', function ()
+{
+    /*$user = new \App\User();
+    $user->name = 'Ryan';
+    $user->email = 'ryan@codeup.com';
+    $user->password = 'password';
+    $user->save();
+
+    $post = new \App\Models\Post();
+    $post->title = 'My second post';
+    $post->content = 'My second post content';
+    $post->url = 'http://codeup.com';
+    $post->created_by = $user->id;
+    $post->save();*/
+
+    // return \App\Models\Post::all();
+    $post = \App\Models\Post::find(3); // I will need to call find first if I want to update
+
+    $post->content = 'Some other content';
+
+    $post->save(); // update
+});
