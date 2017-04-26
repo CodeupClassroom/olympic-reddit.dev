@@ -61,6 +61,6 @@ class StudentsController extends Controller
      */
     public function destroy($id)
     {
-        return 'Deleting post with ID' . $id;
+        return 'Deleting post with ID ' . $id;
     }
 }
