@@ -32,6 +32,16 @@ class StudentsController extends Controller
         return back()->withInput();  // redirect back to the previous page (/students/create) with all the user input
     }
 
+    public function edit($id)
+    {
+        return view('students.edit');
+    }
+
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
     /**
      * Display the specified resource.
      *
@@ -44,29 +54,6 @@ class StudentsController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        return view('students.edit');
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
@@ -74,6 +61,6 @@ class StudentsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return 'Deleting post with ID' . $id;
     }
 }
