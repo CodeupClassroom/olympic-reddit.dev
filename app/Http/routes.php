@@ -45,3 +45,4 @@ Route::delete('/posts/{posts}', 'PostsController@destroy'); // delete a post*/
 
 
 Route::resource('posts', 'PostsController');  // A resource controller
+Route::resource('students', 'StudentsController');  // A resource controller
