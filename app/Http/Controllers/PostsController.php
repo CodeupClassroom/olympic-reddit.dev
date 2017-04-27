@@ -42,11 +42,19 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
+        $rules = [
+            'title' => 'required|max:100',
+            'url'   => 'required|url',
+            'content'   => 'required',
+        ];
+
+        $this->validate($request, $rules);
+
         $post = new \App\Models\Post();
         $post->title = $request->title;
         $post->url = $request->url;
         $post->content = $request->content;
-        $post->created_by = $request->created_by;
+        $post->created_by = 1;
         $post->save();
 
         $data = [];
@@ -96,6 +104,14 @@ class PostsController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $rules = [
+            'title' => 'required|max:100',
+            'url'   => 'required|url',
+            'content'   => 'required',
+        ];
+
+        $this->validate($request, $rules);
+
         $post = \App\Models\Post::find($id);
         $post->title = $request->title;
         $post->url = $request->url;
