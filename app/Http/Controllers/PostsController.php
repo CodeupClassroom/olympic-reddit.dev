@@ -48,7 +48,7 @@ class PostsController extends Controller
      */
     public function show($id)
     {
-        //
+        return "Shows an individual post from the posts table with the id of $id";
     }
 
     /**
@@ -59,7 +59,7 @@ class PostsController extends Controller
      */
     public function edit($id)
     {
-        //
+        return "This will present the current data for the post of id $id and outputs that data onto a form inside the input fields";
     }
 
     /**

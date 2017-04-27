@@ -16,7 +16,9 @@ class StudentsController extends Controller
      */
     public function index()
     {
-        //
+        $students = \App\Models\Student::all();
+
+        return view('students.index')->with('students', $students);
     }
 
     public function create()
@@ -26,20 +28,39 @@ class StudentsController extends Controller
 
     public function store(Request $request)
     {
+        $student = new \App\Models\Student();
+        $student->first_name = $request->first_name;
+        $student->description = $request->description;
+        $student->subscribed = $request->subscribed;
+        $student->school_name = $request->school_name;
+        $student->save();
+
+        return redirect()->action('StudentsController@index');
+
         /*var_dump($request->all());
         var_dump($request->first_name);*/
 
-        return back()->withInput();  // redirect back to the previous page (/students/create) with all the user input
+        // return back()->withInput();  // redirect back to the previous page (/students/create) with all the user input
     }
 
     public function edit($id)
     {
-        return view('students.edit');
+        $student = \App\Models\Student::find($id);
+
+        return view('students.edit')->with('student', $student);
     }
 
     public function update(Request $request, $id)
     {
-        //
+        $student = \App\Models\Student::find($id);
+
+        $student->first_name = $request->first_name;
+        $student->description = $request->description;
+        $student->subscribed = $request->subscribed;
+        $student->school_name = $request->school_name;
+        $student->save();
+
+        return view('students.show')->with('student', $student);
     }
 
     /**
@@ -50,7 +71,9 @@ class StudentsController extends Controller
      */
     public function show($id)
     {
-        //
+        $student = \App\Models\Student::find($id);
+
+        return view('students.show')->with('student', $student);
     }
 
     /**
@@ -61,6 +84,9 @@ class StudentsController extends Controller
      */
     public function destroy($id)
     {
-        return 'Deleting post with ID ' . $id;
+        $student = \App\Models\Student::find($id);
+        $student->delete();
+
+        return redirect()->action('StudentsController@index');
     }
 }
