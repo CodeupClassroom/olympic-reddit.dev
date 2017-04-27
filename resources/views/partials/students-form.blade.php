@@ -6,7 +6,11 @@
         id="first_name"
         name="first_name"
         class="form-control"
-        value="{{ old('first_name') }}"
+        @if(isset($student->first_name))
+            value="{{ $student->first_name }}"
+        @else
+            value="{{ old('first_name')}}"
+        @endif
     >
 </div>
 <div class="form-group">
@@ -16,7 +20,11 @@
         id="description"
         name="description"
         class="form-control"
-        value="{{ old('description') }}"
+        @if(isset($student->description))
+            value="{{ $student->description }}"
+        @else
+            value="{{ old('description') }}"
+        @endif
     >
 </div>
 <div class="form-group">
@@ -26,7 +34,12 @@
             type="checkbox"
             id="subscribed"
             name="subscribed"
-            {{ old('subscribed') === 'on' ? 'checked' : '' }}
+            @if(isset($student->subscribed)) 
+                {{ $student->subscribed === 1 ? 'checked' : ''}}
+            @else 
+                {{ old('subscribed') === 'on' ? 'checked' : '' }}
+            @endif
+            
         >
     </label>
 </div>
@@ -37,6 +50,10 @@
         id="school_name"
         name="school_name"
         class="form-control"
-        value="{{ old('school_name') }}"
+        @if(isset($student->school_name)) 
+            value="{{ $student->school_name }}"
+        @else
+            value="{{ old('school_name') }}"
+        @endif
     >
 </div>
