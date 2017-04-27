@@ -9,14 +9,15 @@ use App\Http\Controllers\Controller;
 
 class StudentsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
+        // 1. Model queries the database
+        // 2. Pass the result/rows from the model to the view
         //
+
+        $students = \App\Models\Student::all();
+
+        return view('students.index')->with('students', $students);
     }
 
     public function create()
@@ -26,10 +27,14 @@ class StudentsController extends Controller
 
     public function store(Request $request)
     {
-        /*var_dump($request->all());
-        var_dump($request->first_name);*/
+        $student = new \App\Models\Student();
+        $student->first_name = $request->first_name;
+        $student->school_name = $request->school_name;
+        $student->subscribed = $request->subscribed;
+        $student->description = $request->description;
+        $student->save();
 
-        return back()->withInput();  // redirect back to the previous page (/students/create) with all the user input
+        return redirect()->action('StudentsController@index');
     }
 
     public function edit($id)
@@ -50,7 +55,9 @@ class StudentsController extends Controller
      */
     public function show($id)
     {
-        //
+        $student = \App\Models\Student::find($id);
+
+        return view('students.show')->with('student', $student);
     }
 
     /**
