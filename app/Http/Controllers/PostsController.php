@@ -16,7 +16,12 @@ class PostsController extends Controller
      */
     public function index()
     {
-        return 'This should show all the posts';
+        $posts = \App\Models\Post::all();
+
+        $data = [];
+        $data['posts'] = $posts;
+
+        return view('posts.index')->with($data);
     }
 
     /**
@@ -26,7 +31,7 @@ class PostsController extends Controller
      */
     public function create()
     {
-        return 'Show a form for creating a post';
+        return view('posts.create');
     }
 
     /**
@@ -37,7 +42,17 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $post = new \App\Models\Post();
+        $post->title = $request->title;
+        $post->url = $request->url;
+        $post->content = $request->content;
+        $post->created_by = $request->created_by;
+        $post->save();
+
+        $data = [];
+        $data['post'] = $post;
+
+        return view('posts.show')->with($data);
     }
 
     /**
@@ -48,7 +63,12 @@ class PostsController extends Controller
      */
     public function show($id)
     {
-        return "Shows an individual post from the posts table with the id of $id";
+        $post = \App\Models\Post::find($id);
+
+        $data = [];
+        $data['post'] = $post;
+
+        return view('posts.show')->with($data);
     }
 
     /**
@@ -59,7 +79,12 @@ class PostsController extends Controller
      */
     public function edit($id)
     {
-        return "This will present the current data for the post of id $id and outputs that data onto a form inside the input fields";
+        $post = \App\Models\Post::find($id);
+
+        $data = [];
+        $data['post'] = $post;
+
+        return view('posts.edit')->with($data);
     }
 
     /**
@@ -71,7 +96,17 @@ class PostsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $post = \App\Models\Post::find($id);
+        $post->title = $request->title;
+        $post->url = $request->url;
+        $post->content = $request->content;
+        $post->created_by = $request->created_by;
+        $post->save();
+
+        $data = [];
+        $data['post'] = $post;
+
+        return view('posts.show')->with($data);
     }
 
     /**
@@ -82,6 +117,9 @@ class PostsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = \App\Models\Post::find($id);
+        $post->delete();
+
+        return view('posts.index');
     }
 }
