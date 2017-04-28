@@ -11,7 +11,6 @@
 |
 */
 
-
 Route::get('/from/{start}/to/{end}', 'HomeController@showNumbers');
 Route::get('/', 'HomeController@showWelcomePage');
 Route::get('/sayhello/{name?}', 'HomeController@sayHello');
@@ -68,4 +67,29 @@ Route::get('/makestudents', function() {
     $student2->school_name = 'Le Petit Academy';
     $student2->description = 'Chet is a remarkably strong dev for his age!';
     $student2->save();
+});
+
+Route::get('/makeposts', function() {
+    $post = new \App\Models\Post();
+    $post->title = "Hello World";
+    $post->url = str_slug($post->title, "-");
+    $post->content = "Hello World, I'm doing Laravel and making full stack apps rapidly
+    !";
+    $post->created_by = \App\User::all()->random()->id;
+    $post->save();
+
+    $post = new \App\Models\Post();
+    $post->title = "Thursday is a fine day for Laravel";
+    $post->url = str_slug($post->title, "-");
+    $post->content = "Seriously, Laravel is awesome. Thursdays are awesome. #Laravel-Thursday and #Laravel-Everyday";
+    $post->created_by = \App\User::all()->random()->id;
+    $post->save();
+
+    $post = new \App\Models\Post();
+    $post->title = "Friday I'm in Love";
+    $post->url = str_slug($post->title, "-");
+    $post->content = "Monday is blue and Tuesday is too...";
+    $post->created_by = \App\User::all()->random()->id;
+    $post->save();
+
 });

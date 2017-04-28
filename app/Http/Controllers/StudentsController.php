@@ -16,7 +16,7 @@ class StudentsController extends Controller
      */
     public function index()
     {
-        $students = \App\Models\Student::all();
+        $students = \App\Models\Student::paginate(4);
 
         return view('students.index')->with('students', $students);
     }
@@ -33,9 +33,12 @@ class StudentsController extends Controller
         $student->description = $request->description;
         $student->subscribed = $request->subscribed;
         $student->school_name = $request->school_name;
+        
         $student->save();
 
-        return redirect()->action('StudentsController@index');
+        $request->session()->flash('successMessage', 'Post saved successfully');
+        
+        return redirect()->action('StudentsController@show', $student->id);
 
         /*var_dump($request->all());
         var_dump($request->first_name);*/
@@ -47,12 +50,21 @@ class StudentsController extends Controller
     {
         $student = \App\Models\Student::find($id);
 
+        if(!$student) {
+            \Session::flash("errorMessage", "Student not found");
+        }
+
         return view('students.edit')->with('student', $student);
     }
 
     public function update(Request $request, $id)
     {
         $student = \App\Models\Student::find($id);
+
+        if(!$student) {
+            \Session::flash("errorMessage", "Student not found");
+            return redirect()->action("StudentsController@index");
+        }
 
         $student->first_name = $request->first_name;
         $student->description = $request->description;
@@ -73,6 +85,12 @@ class StudentsController extends Controller
     {
         $student = \App\Models\Student::find($id);
 
+        if(!$student) {
+            
+            \Session::flash('errorMessage', "Student not found");
+            return redirect()->action('StudentsController@index');
+        }
+
         return view('students.show')->with('student', $student);
     }
 
@@ -85,6 +103,12 @@ class StudentsController extends Controller
     public function destroy($id)
     {
         $student = \App\Models\Student::find($id);
+
+        if(!$student) {
+            \Session::flash('errorMessage', "Post not found");
+            return redirect()->action('StudentsController@index');
+        }
+
         $student->delete();
 
         return redirect()->action('StudentsController@index');
