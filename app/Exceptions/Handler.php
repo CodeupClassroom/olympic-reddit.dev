@@ -30,7 +30,12 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $e)
     {
-        return parent::report($e);
+        //if ($e instanceof \InvalidArgumentException) {
+        //    dd($e->getMessage());
+        //} else {
+            return parent::report($e);
+        //}
+
     }
 
     /**

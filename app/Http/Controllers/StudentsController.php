@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Student;
 use Session;
+use Log;
 
 class StudentsController extends Controller
 {
@@ -69,19 +70,18 @@ class StudentsController extends Controller
         return view('students.show')->with('student', $student);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function show(Request $request, $id)
     {
         $student = Student::find($id);
 
         if(!$student) {
-            Session::flash('errorMessage', "Student not found");
-            return redirect()->action('StudentsController@index');
+            Log::info("Student with ID $id cannot be found");
+            $request->session()->flash('errorMessage', 'Post not found');
+            abort(404);
+
+            //throw new \InvalidArgumentException('Student canno be found');
+            //Session::flash('errorMessage', "Student not found");
+            //return redirect()->action('StudentsController@index');
         }
 
         return view('students.show')->with('student', $student);
