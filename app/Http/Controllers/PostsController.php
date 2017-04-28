@@ -9,13 +9,22 @@ use App\Http\Controllers\Controller;
 
 class PostsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    // getting access to the request, is as a easy as adding it as a parameter to any controller
+    // action
+    public function index(Request $request)
     {
+        //dd($request->session());  // The session is now an object, not an associative array
+        // we can get access to session through the request
+
+//        $session = $request->session();  // session_start();
+//
+//        $session->clear();  // \Session::clear()
+//        // Facade
+//        \Session::clear(); // $session->clear();
+//
+//        //$session->put('greet', 'hello world');  // $_SESSION['greet'] = 'hello world!';
+//        $session->flash('greeting', 'hello world');  // available only for the NEXT request
+
         $posts = \App\Models\Post::paginate(4);
 
         $data = [];
@@ -24,13 +33,16 @@ class PostsController extends Controller
         return view('posts.index')->with($data);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function create(Request $request)
     {
+        //$session = $request->session();
+
+        //$session->forget('greeting'); // unset($_SESSION['greet']);
+
+        //$session->flush(); // unset($_SESSION);  // $_SESSION = [];
+
+        //dd($session->get('greeting'));  // dd($_SESSION['greet']);
+
         return view('posts.create');
     }
 
@@ -57,21 +69,22 @@ class PostsController extends Controller
         $post->created_by = 1;
         $post->save();
 
-        $data = [];
-        $data['post'] = $post;
-
-        return view('posts.show')->with($data);
+        $request->session()->flash('successMessage', 'Post saved successfully');
+        return redirect()->action('PostsController@show', [$post->id]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function show(Request $request, $id)
     {
+        //$session = $request->session();
+        //dd(\Session::get('greeting'));  // Laravel 4
+        //dd($session->get('greeting'));  // Laravel 5
+
         $post = \App\Models\Post::find($id);
+
+        if (!$post) {
+            $request->session()->flash('errorMessage', 'Post cannot be found');
+            return redirect()->action('PostsController@index');
+        }
 
         $data = [];
         $data['post'] = $post;
@@ -85,9 +98,14 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
         $post = \App\Models\Post::find($id);
+
+        if (!$post) {
+            $request->session()->flash('errorMessage', 'Post cannot be found');
+            return redirect()->action('PostsController@index');
+        }
 
         $data = [];
         $data['post'] = $post;
@@ -113,27 +131,31 @@ class PostsController extends Controller
         $this->validate($request, $rules);
 
         $post = \App\Models\Post::find($id);
+
+        if (!$post) {
+            $request->session()->flash('errorMessage', 'Post cannot be found');
+            return redirect()->action('PostsController@index');
+        }
+
         $post->title = $request->title;
         $post->url = $request->url;
         $post->content = $request->content;
         $post->created_by = $request->created_by;
         $post->save();
 
-        $data = [];
-        $data['post'] = $post;
-
-        return view('posts.show')->with($data);
+        $request->session()->flash('successMessage', 'Post saved successfully');
+        return redirect()->action('PostsController@show', [$post->id]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         $post = \App\Models\Post::find($id);
+
+        if (!$post) {
+            $request->session()->flash('errorMessage', 'Post cannot be found');
+            return redirect()->action('PostsController@index');
+        }
+
         $post->delete();
 
         return view('posts.index');
