@@ -7,8 +7,5 @@
         <p>{{ $post->content }}</p>
         <p><a href="{{ action('PostsController@edit', $post->id) }}">Click here to edit this post</a></p>
 
-        @if($request->session()->has('successMessage'))
-            <p>{{ $request->session('successMessage') }}</p>
-        @endif
     </section>
 @stop
