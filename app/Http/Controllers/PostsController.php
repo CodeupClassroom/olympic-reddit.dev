@@ -13,6 +13,11 @@ use Log;
 
 class PostsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth', ['create', 'store', 'edit', 'update', 'destroy']);
+    }
+
     // getting access to the request, is as a easy as adding it as a parameter to any controller
     // action
     public function index(Request $request)
@@ -27,6 +32,7 @@ class PostsController extends Controller
 
     public function create(Request $request)
     {
+        //if -> redirect
         return view('posts.create');
     }
 
@@ -38,7 +44,7 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-
+        //if -> redirect
         $this->validate($request, Post::$rules);
 
         $post = new Post();
@@ -77,6 +83,7 @@ class PostsController extends Controller
      */
     public function edit(Request $request, $id)
     {
+        //if -> redirect
         $post = Post::find($id);
 
         if (!$post) {
@@ -99,7 +106,7 @@ class PostsController extends Controller
      */
     public function update(Request $request, $id)
     {
-
+        //if -> redirect
         $this->validate($request, Post::$rules);
 
         $post = Post::find($id);
@@ -121,6 +128,7 @@ class PostsController extends Controller
 
     public function destroy(Request $request, $id)
     {
+        //if -> redirect
         $post = Post::find($id);
 
         if (!$post) {
