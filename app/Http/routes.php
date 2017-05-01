@@ -33,3 +33,12 @@ Route::delete('/posts/{posts}', 'PostsController@destroy'); // delete a post*/
 Route::resource('posts', 'PostsController');  // A resource controller
 Route::resource('students', 'StudentsController');  // A resource controller
 
+
+// Authentication routes...
+Route::get('/login', 'Auth\AuthController@getLogin');
+Route::post('/login', 'Auth\AuthController@postLogin');
+Route::get('/logout', 'Auth\AuthController@getLogout');
+
+// Registration routes...
+Route::get('/register', 'Auth\AuthController@getRegister');
+Route::post('/register', 'Auth\AuthController@postRegister');
