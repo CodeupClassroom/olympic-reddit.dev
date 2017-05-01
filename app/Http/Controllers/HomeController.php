@@ -12,9 +12,6 @@ class HomeController extends Controller
     // actions
     public function showWelcomePage()
     {
-        /*header('location: /sayhello/Olympic');
-        die;*/
-        //return redirect()->action('HomeController@sayHello', ['Olympic']);
         return view('welcome');
     }
 
