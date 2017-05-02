@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Post extends Model
+class Post extends BaseModel
 {
     protected $table = "posts";
 
@@ -12,5 +12,5 @@ class Post extends Model
         'title' => 'required|max:100',
         'url'   => 'required|url',
         'content'   => 'required',
-    ];
+    ];    
 }

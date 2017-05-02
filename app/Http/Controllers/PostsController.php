@@ -15,7 +15,7 @@ class PostsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth', ['create', 'store', 'edit', 'update', 'destroy']);
+        $this->middleware('auth', ['except' => ['index', 'show']]);
     }
 
     // getting access to the request, is as a easy as adding it as a parameter to any controller
@@ -32,7 +32,6 @@ class PostsController extends Controller
 
     public function create(Request $request)
     {
-        //if -> redirect
         return view('posts.create');
     }
 

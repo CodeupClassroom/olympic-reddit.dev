@@ -10,7 +10,7 @@ namespace App\Models;  // PSR-4
 
 use Illuminate\Database\Eloquent\Model;
 
-class Student extends Model
+class Student extends BaseModel
 {
     protected $table = 'students';
 }
