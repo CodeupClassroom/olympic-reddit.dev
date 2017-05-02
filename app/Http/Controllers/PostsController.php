@@ -22,7 +22,20 @@ class PostsController extends Controller
     // action
     public function index(Request $request)
     {
-        $posts = Post::paginate(4);
+        if ($request->has('search')) { // isset($_REQUEST['search'])
+        // if ($request->search) {
+            // SELECT * FROM posts
+            // INNER JOIN users ON created_by = users.id
+            // WHERE title LIKE '%value%'
+            // OR name LIKE '%value%'
+            $posts = Post::join('users', 'created_by', '=', 'users.id')
+                ->where('title', 'LIKE', "%$request->search%")
+                ->orWhere('name', 'LIKE', "%$request->search%")
+                ->orderBy('created_by', 'ASC')
+                ->paginate(4); // query builder
+        } else {
+            $posts = Post::orderBy('created_by', 'ASC')->paginate(4);  // SELECT * FROM posts OFFSET 0 LIMIT  // paginator
+        }
 
         $data = [];
         $data['posts'] = $posts;
